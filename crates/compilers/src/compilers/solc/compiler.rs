@@ -455,6 +455,10 @@ impl Solc {
         let mut cmd = Command::new(&self.solc);
         cmd.stdin(Stdio::piped()).stderr(Stdio::piped()).stdout(Stdio::piped());
 
+        // is this where the binary can't be found?
+        debug!(?cmd, "configuring command");
+        debug!(is_file = self.solc.is_file());
+
         if !self.allow_paths.is_empty() {
             cmd.arg("--allow-paths");
             cmd.arg(self.allow_paths.iter().map(|p| p.display()).join(","));
